@@ -2,6 +2,7 @@
 
 using namespace std;
 
+// Practice with pointers
 int main () {
   int x = 5, y = 15;
   int * p1, *p2;
