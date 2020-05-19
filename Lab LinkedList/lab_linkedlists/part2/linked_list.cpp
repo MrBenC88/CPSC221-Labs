@@ -60,6 +60,28 @@ std::vector<int> to_vector(Node* head) {
  */
 void delete_last_element(Node*& head){
   // ******** WRITE YOUR CODE HERE ********
+  if (head == NULL) {
+    return;
+  }
+  if (head->next == NULL) {
+    delete head;
+    head = NULL;
+    return;
+  }
+  Node* curr = head; 
+  Node* nextNode = head->next; 
+
+  while(nextNode->next != NULL) {
+    curr = curr->next;
+    nextNode = nextNode->next;
+  }
+
+  // have traversed to the end
+  // now we have to delete the last node which is nextNode
+
+  curr->next = NULL;
+  delete nextNode;
+  nextNode = NULL;
 
 }
 
