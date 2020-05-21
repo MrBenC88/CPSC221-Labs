@@ -97,34 +97,61 @@ void delete_last_element(Node*& head){
 void remove(Node*& head, int oldKey) {
   // ******** WRITE YOUR CODE HERE ********
 
-
-
   if (head == NULL) {
     return;
   }
-  
-  if (head->next == NULL) {
-    if (head->key == oldKey) {
-      delete head;
-      head = NULL;
-      return;
-    } else {
-      return;
-    }
+
+  Node *current = head->next;
+  Node *previous = head;
+
+  if (head->key == oldKey) {
+    head = head->next;
+    delete previous;
+    return;
   }
 
-  Node* curr = head;
-  Node* nextNode = head->next;
-
-  while(nextNode != NULL) {
-    if (nextNode->key == oldKey) {
-      curr->next = nextNode->next;
-      delete nextNode;
-      nextNode = NULL;
+  while (current != NULL) {
+    if (current -> key == oldKey) {
       break;
+    } else {
+      current = current->next;
+      previous = previous->next;
     }
-    nextNode = nextNode->next;
   }
+
+  if (current != NULL) {
+    previous->next = current -> next;
+    delete current;
+    return;
+  }
+
+
+  // if (head == NULL) {
+  //   return;
+  // }
+  
+  // if (head->next == NULL) {
+  //   if (head->key == oldKey) {
+  //     delete head;
+  //     head = NULL;
+  //     return;
+  //   } else {
+  //     return;
+  //   }
+  // }
+
+  // Node* curr = head;
+  // Node* nextNode = head->next;
+
+  // while(nextNode != NULL) {
+  //   if (nextNode->key == oldKey) {
+  //     curr->next = nextNode->next;
+  //     delete nextNode;
+  //     nextNode = NULL;
+  //     break;
+  //   }
+  //   nextNode = nextNode->next;
+  // }
 
 }
 
