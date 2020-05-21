@@ -97,6 +97,35 @@ void delete_last_element(Node*& head){
 void remove(Node*& head, int oldKey) {
   // ******** WRITE YOUR CODE HERE ********
 
+
+
+  if (head == NULL) {
+    return;
+  }
+  
+  if (head->next == NULL) {
+    if (head->key == oldKey) {
+      delete head;
+      head = NULL;
+      return;
+    } else {
+      return;
+    }
+  }
+
+  Node* curr = head;
+  Node* nextNode = head->next;
+
+  while(nextNode != NULL) {
+    if (nextNode->key == oldKey) {
+      curr->next = nextNode->next;
+      delete nextNode;
+      nextNode = NULL;
+      break;
+    }
+    nextNode = nextNode->next;
+  }
+
 }
 
 /**
@@ -110,6 +139,35 @@ void remove(Node*& head, int oldKey) {
  */
 void insert_after(Node* head, int oldKey, int newKey){
   // ******** WRITE YOUR CODE HERE ********
+  if (head == NULL) {
+    return;
+  }
+  
+  if (head->next == NULL) {
+    if (head->key == oldKey) {
+      Node* newNode = new Node();
+      newNode->key = newKey;
+      newNode->next = NULL;
+      head->next = newNode;
+      return;
+
+    } else {
+      return;
+    }
+  }
+
+  Node* curr = head;
+  Node* nextNode = head->next;
+
+  while(nextNode != NULL) {
+    if (curr->key == oldKey) {
+      Node* newNode = new Node();
+      newNode->key = newKey;
+      newNode->next = curr->next;
+      curr->next = newNode;
+    }
+    nextNode = nextNode->next;
+  }
 
 }
 
@@ -125,6 +183,39 @@ void insert_after(Node* head, int oldKey, int newKey){
  */
 Node* interleave(Node* list1, Node* list2){
   // ******** WRITE YOUR CODE HERE ********
-  return NULL;  // ******** DELETE THIS LINE ********
+  if (list1 ==  NULL) {
+    return list2;
+  }
+
+  if (list2 == NULL) {
+    return list1;
+  }
+
+  int length = (int) std::max(size(list1), size(list2));
+  std::vector<int> totalList;
+
+  for (unsigned int i =0; i < (unsigned int) length; i++) {
+    if (list1 == NULL) {
+      totalList.push_back(list2->key);
+      list2 = list2->next;
+    } else if (list2 == NULL) {
+      totalList.push_back(list1->key);
+    } else {
+      totalList.push_back(list1->key);
+      totalList.push_back(list2->key);
+      list1 = list1->next;
+      list2 = list2->next;
+    }
+  }
+
+  Node* result = new Node();
+  result->key = totalList[totalList.size() - 1];
+  result->next = NULL;
+
+  for (int i = totalList.size()- 2; i >=0; i --) {
+    insert(result, totalList[i]);
+  }
+  return result;
+      
 
 }
