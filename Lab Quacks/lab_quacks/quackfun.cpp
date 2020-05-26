@@ -52,12 +52,78 @@ namespace QuackFun {
      * @hint You'll want to make a local stack variable.
      */
     template <typename T>
-    void scramble(queue<T>& q)
+    void scramble(queue<T> &q)
     {
         stack<T> s;
-        // optional: queue<T> q2;
+        int counter = 1;
+        int currSize = q.size();
+        while (currSize)
+        {
+            if (counter % 2 == 0)
+            {
+                if (currSize < counter)
+                {
+                    for (int i = 0; i < currSize; i++)
+                    {
+                        T temp = q.front();
+                        q.pop();
+                        s.push(temp);
+                    }
 
-        // Your code here
+                    for (int i = 0; i < currSize; i++)
+                    {
+                        T temp2 = s.top();
+                        s.pop();
+                        q.push(temp2);
+                    }
+                    currSize = 0;
+                    counter++;
+                }
+                else
+                {
+                    for (int i = 0; i < counter; i++)
+                    {
+                        T temp = q.front();
+                        q.pop();
+                        s.push(temp);
+                    }
+
+                    for (int i = 0; i < counter; i++)
+                    {
+                        T temp2 = s.top();
+                        s.pop();
+                        q.push(temp2);
+                    }
+                    currSize -= counter;
+                    counter++;
+                }
+            }
+            else
+            {
+                if (currSize < counter)
+                {
+                    for (int i = 0; i < currSize; i++)
+                    {
+                        T temp = q.front();
+                        q.pop();
+                        q.push(temp);
+                    }
+                    currSize = 0;
+                    counter++;
+                }
+                else
+                {
+                    for (int i = 0; i < counter; i++)
+                    {
+                        T temp = q.front();
+                        q.pop();
+                        q.push(temp);
+                    }
+                    currSize -= counter;
+                    counter++;
+                }
+            }
+        }
     }
 
     /**
