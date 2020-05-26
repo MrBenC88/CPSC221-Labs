@@ -172,6 +172,18 @@ class BinaryTree
      * @param subRoot The current node in the recursion.
      */
     void clear(Node* subRoot);
+
+    /** Private helper for printLeftToRight
+    */
+    void printLeftToRight(const Node* subRoot) const;
+
+    /*
+    * Private helper for mirror 
+    */
+    void mirror(Node* &subroot);
+
+    // Private helper function for printPaths
+    void printPaths(Node* root, string a) const ;
 };
 
 #include "binarytree_given.cpp"

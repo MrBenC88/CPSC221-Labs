@@ -38,6 +38,9 @@ int BinaryTree<T>::height(const Node* subRoot) const
     return 1 + max(height(subRoot->left), height(subRoot->right));
 }
 
+
+
+
 /**
  * Prints out the values of the nodes of a binary tree in order.
  * That is, everything to the left of a node will be printed out before that
@@ -47,11 +50,30 @@ int BinaryTree<T>::height(const Node* subRoot) const
 template <typename T>
 void BinaryTree<T>::printLeftToRight() const
 {
-    // Your code here
+    // Your code here 
+    // in-order-traversal to print out the nodes of a tree
+    printLeftToRight(root);
 
     // Do not remove this line - used for correct print output
     cout << endl;
 }
+
+
+
+/**
+ * Private Helper Function for printLeftToRight
+ */
+template <typename T>
+void  BinaryTree<T>::printLeftToRight(const Node* subRoot) const
+{
+    // in order traversal
+    if (subRoot != NULL){
+        printLeftToRight(subRoot->left);
+        cout << to_string(subRoot->elem) <<  " ";
+        printLeftToRight(subRoot->right);
+    }
+}
+
 
 /**
  * Flips the tree over a vertical axis, modifying the tree itself
@@ -61,7 +83,21 @@ template <typename T>
 void BinaryTree<T>::mirror()
 {
     // Your code here
+    mirror(root);
+}
 
+// private helper function for mirror
+template <typename T>
+void  BinaryTree<T>::mirror(Node* &subRoot) 
+{
+    // put some code here
+    if (subRoot!= NULL) {
+        mirror(subRoot->left);
+        mirror(subRoot->right);
+        Node * temp = subRoot->left;
+        subRoot->left = subRoot->right;
+        subRoot->right = temp;
+    }
 }
 
 /**
@@ -74,7 +110,27 @@ template <typename T>
 void BinaryTree<T>::printPaths() const
 {
     // Your code here
+    printPaths(root, "Path: ");
 
+}
+
+// private helper function for printPaths
+template <typename T>
+void BinaryTree<T>::printPaths(Node* root, string a) const 
+{
+    a +=  to_string(root->elem) + " "  ;
+
+    if (root->right == NULL && root->left == NULL) { // check if its a leaf node
+        cout << a << endl; // if it is, then we can print
+    }
+    else {
+        if (root->left != NULL ) {
+            printPaths(root->left,  a); 
+        } 
+        if (root->right != NULL) {   
+            printPaths(root->right,  a);
+        }  
+    }
 }
 
 /**
