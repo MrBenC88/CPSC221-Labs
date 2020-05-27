@@ -143,10 +143,25 @@ namespace QuackFun {
     template <typename T>
     bool verifySame(stack<T>& s, queue<T>& q)
     {
-        bool retval = true; // optional
-        //T temp1; // rename me
-        //T temp2; // rename :)
+        if (s.empty()) {
+            return true;
+        }
 
-        return retval;
+        T sTemp = s.top();
+        s.pop();
+
+        verifySame(s, q);
+
+        T qTemp = q.front();
+        s.push(sTemp);
+
+        if (sTemp != qTemp) {
+            return false;
+        }
+
+        q.push(qTemp);
+        q.pop();
+
+        return true;
     }
 }
