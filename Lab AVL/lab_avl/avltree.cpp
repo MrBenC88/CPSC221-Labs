@@ -60,6 +60,13 @@ template <class K, class V>
 void AVLTree<K, V>::updateHeight(Node* node)
 {
     // TODO: your code here
+    if (node == NULL) {
+        return; 
+    }
+
+    node->height = (height(node->right) > height(node->left)) ? height(node->right): height(node->left);
+    node->height = node->height + 1;
+
 }
 
 template <class K, class V>
@@ -73,6 +80,8 @@ void AVLTree<K, V>::rotateLeft(Node*& t)
     t = newSubRoot;
 
     // TODO: update the heights for t->left and t (in that order)
+    updateHeight(t->left);
+    updateHeight(t);
 }
 
 template <class K, class V>
@@ -81,6 +90,14 @@ void AVLTree<K, V>::rotateRight(Node*& t)
     *_out << __func__ << endl; // Outputs the rotation name (don't remove this)
 
     // TODO: your code here
+
+    Node* newSubRoot = t->left;
+    t->left = newSubRoot->right;
+    newSubRoot->right = t;
+    t = newSubRoot;
+
+    updateHeight(t->right);
+    updateHeight(t);
 }
 
 template <class K, class V>
@@ -91,6 +108,9 @@ void AVLTree<K, V>::rotateLeftRight(Node*& t)
     // TODO: your code here
     // HINT: you should make use of the other functions defined in this file,
     // instead of manually changing the pointers again
+    rotateLeft(t->left);
+    rotateRight(t);
+
 }
 
 template <class K, class V>
@@ -99,6 +119,8 @@ void AVLTree<K, V>::rotateRightLeft(Node*& t)
     *_out << __func__ << endl; // Outputs the rotation name (don't remove this)
 
    // TODO: your code here
+   rotateRight(t->right);
+   rotateLeft(t);
 }
 
 template <class K, class V>
@@ -110,6 +132,45 @@ void AVLTree<K, V>::rebalance(Node*& subtree)
       * Case 5: the tree is already balanced. You MUST still correctly update
       * subtree's height 
       */
+
+    if (subtree == NULL) {
+        
+        return;
+    }
+
+    Node* leftSubTree = subtree->left;
+    Node* rightSubTree = subtree->right;
+    int balance;
+    int leftBalance;
+    int rightBalance;
+
+    balance = height(rightSubTree) - height(leftSubTree);
+
+    if (leftSubTree!= NULL) {
+        leftBalance = height(leftSubTree->right) - height(leftSubTree->left);
+
+        if (balance == -2) {
+            if (leftBalance == -1) {
+                rotateRight(subtree);
+            } else {
+                rotateLeftRight(subtree);
+            }
+        }
+    }
+
+    if (rightSubTree != NULL) {
+        rightBalance = height(rightSubTree->right) - height(rightSubTree->left);
+
+        if (balance == 2) {
+            if (rightBalance == 1) {
+                rotateLeft(subtree);
+            } else {
+                rotateRightLeft(subtree);
+            }
+        }
+    }
+    updateHeight(subtree);
+
 
 }
 
@@ -144,6 +205,13 @@ void AVLTree<K, V>::remove(Node*& subtree, const K& key)
              * TODO: your code here. For testing purposes, you
              * should use the PREDECESSOR.
              */
+
+             Node *iop = subtree->left;
+             while(iop->right != NULL) {
+                 iop = iop->right;
+             }
+             swap(iop , subtree);
+             remove(subtree->left , key);
 
         } else {
             /* Case 3: Node to remove has one child */
