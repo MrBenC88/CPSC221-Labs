@@ -78,5 +78,29 @@ bool PronounceDict::homophones(const string& word1, const string& word2) const
 {
     /* Your code goes here! */
 
+    //store temp variable for the word params
+    string tempWord1 = word1;
+    string tempWord2 = word2;
+
+    //transform the string to uppercase in place
+    std::transform(tempWord1.begin(), tempWord1.end(), tempWord1.begin(), ::toupper);
+    std::transform(tempWord2.begin(), tempWord2.end(), tempWord2.begin(), ::toupper);
+
+    
+    auto findWord1 = dict.find(tempWord1);
+    auto findWord2 = dict.find(tempWord2);
+
+    // assuming we can find it in the dict
+    if(findWord1 != dict.end() && findWord2 != dict.end()){
+
+        //check the size
+        if(findWord1->second ==  findWord2->second){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
     return false;
+
 }
