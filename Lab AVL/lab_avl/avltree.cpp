@@ -134,7 +134,6 @@ void AVLTree<K, V>::rebalance(Node*& subtree)
       */
 
     if (subtree == NULL) {
-        
         return;
     }
 
