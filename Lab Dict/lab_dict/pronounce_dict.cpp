@@ -90,10 +90,8 @@ bool PronounceDict::homophones(const string& word1, const string& word2) const
     auto findWord1 = dict.find(tempWord1);
     auto findWord2 = dict.find(tempWord2);
 
-    // assuming we can find it in the dict
     if(findWord1 != dict.end() && findWord2 != dict.end()){
 
-        //check the size
         if(findWord1->second ==  findWord2->second){
             return true;
         }
