@@ -21,9 +21,15 @@ using std::map;
 unsigned long fib(unsigned long n)
 {
     /* Your code goes here! */
+    if (n == 0) {
+        return 0;
+    }
 
-    // Stub value - remove when you are done
-    return 0;
+    else if (n == 1) {
+        return 1;
+    }
+
+    return fib(n-1) + fib(n-2);
 }
 
 /**
@@ -36,6 +42,23 @@ unsigned long memoized_fib(unsigned long n)
 {
     /* Your code goes here! */
 
-    // Stub value - remove when you are done
-    return 0;
+    static map<unsigned long, unsigned long> memo  = {
+        {0,0},
+        {1,1}
+    };
+
+    auto lookup = memo.find(n); // look for n in the memo
+    // if cannot find anything then will return !=memo.end
+
+    if (lookup != memo.end()) {
+        //if we found the item then we return the value from that key (lookup)
+        return lookup->second;
+
+    } else {
+        // we didn't find the item so we calculate it and store it in our memo 
+        unsigned long result = memoized_fib(n-1) + memoized_fib(n-2);
+        memo[n] = result;
+        return result;
+    }
+
 }
