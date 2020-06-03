@@ -50,7 +50,28 @@ AnagramDict::AnagramDict(const vector<string>& words)
 void AnagramDict::add_word_to_dict(const std::string& word)
 {
     /* Your code goes here! */
+    string wordCopy = word;
+    std::sort(wordCopy.begin(), wordCopy.end());
+    
+    auto lookup= dict.find(wordCopy);
+    if (lookup == dict.end()) {
+    // if lookup is not in the dictionary XDDDDDDD
 
+        vector<string> newVector;
+        newVector.push_back(word);
+
+        dict.insert ( std::pair<string,vector<string>>(wordCopy,newVector) );
+
+
+    } else { // if key exists, then dict[wordCopy] = add the word into vector
+        dict[wordCopy].push_back(word); 
+       
+    }
+
+
+    // string wordCopy = word;
+    // std::sort(wordCopy.begin(), wordCopy.end());
+    // dict[wordCopy].push_back(word);
 }
 
 /**
@@ -63,8 +84,17 @@ vector<string> AnagramDict::get_anagrams(const string& word) const
 {
     /* Your code goes here! */
 
-    // Stub value - remove when you are done
-    return vector<string>();
+    string wordCopy = word;
+    std::sort(wordCopy.begin(), wordCopy.end());
+    auto lookup = dict.find(wordCopy);
+
+    if (dict.find(wordCopy) != dict.end()){
+        return dict.find(wordCopy)->second;
+    } else {
+        return vector<string>();
+    }
+    
+    
 }
 
 /**
@@ -77,6 +107,29 @@ vector<vector<string>> AnagramDict::get_all_anagrams() const
 {
     /* Your code goes here! */
 
-    // Stub value - remove when you are done
-    return vector<vector<string>>();
+    vector<vector<string>> res;
+    auto beginIter = dict.begin();
+    auto endIter = dict.end();
+    for (auto iter = beginIter; iter  != endIter; iter++ ) {
+        if (iter->second.size() > 1) {
+            res.push_back(iter->second);
+        }
+    }
+    return res;
+
+    /**
+    vector<vector<string>> res;
+
+    for (auto & key_val : dict) {
+        res.push_back(key_val.second);
+    }
+
+    if (res.size() >= 2) {
+        return res;
+    } else {
+        return vector<vector<string>>();
+    }
+    
+    */
 }
+
