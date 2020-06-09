@@ -59,7 +59,30 @@ bool AnagramFinder<Dict>::checkWord(const string& word, const string& test)
 
     (void) word; // prevent warnings... When you implement this function, remove this line.
     (void) test; // prevent warnings... When you implement this function, remove this line.
+    
+    
+    if (word.length() != test.length())
+        return false;
 
+    HT<char, int>wordHash(256);
+
+    for(int i = 0; i < word.length(); i++){
+        wordHash[word[i]]++;
+    }
+    
+    HT<char, int>testHash(256);
+
+    for (int i = 0; i < test.length(); i++){
+        testHash[test[i]]++;
+    }
+    typename HT<char, int>::iterator wit = wordHash.begin();
+    typename HT<char, int>::iterator tit = testHash.begin();
+    
+    for (int i = 0; i < 256; i++)
+    {
+        if (testHash[i] != wordHash[i])
+            return false;
+    }
     return true;
 }
 
