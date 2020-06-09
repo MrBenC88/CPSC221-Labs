@@ -33,7 +33,29 @@ vector<pair<string, int>> WordFreq<Dict>::getWords(int threshold) const
      */
 
 
-    (void) threshold; // prevent warnings... When you implement this function, remove this line.
+    //(void) threshold; // prevent warnings... When you implement this function, remove this line.
+
+    Dict<String, int> hashTable(256);
+
+    while (infile.good()) {
+        string word = infile.getNextWord();
+        
+        if(!hashTable.keyExists(word)){
+            hashTable.insert(word, 1);
+        }
+        else{
+            int count = hashTable.find(word);
+            hashTable.remove(word);
+            hashTable.insert(word, count+1);
+        }
+    }
+    
+    typename Dict<string, int>::iterator it;
+    for (it = hashTable.begin(); it != hashTable.end(); it++) {
+        if (it->second >= threshold){
+            ret.push_back(*it);
+        }
+    }
 
     return ret;
 }
