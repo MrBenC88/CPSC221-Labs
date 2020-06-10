@@ -76,7 +76,7 @@ void heap<T, Compare>::heapifyUp(size_t currentIdx)
     if (currentIdx == root())
         return;
     size_t parentIdx = parent(currentIdx);
-    
+
     if (higherPriority(_elems[currentIdx], _elems[parentIdx])) {
         std::swap(_elems[currentIdx], _elems[parentIdx]);
         heapifyUp(parentIdx);
@@ -97,26 +97,27 @@ heap<T, Compare>::heap(const std::vector<T>& elems)
     /// Your algorithm should use heapifyDown() so that it constructs
     /// the same heap as our test case.
 
-    if(elems.size() == 0){
-        heap();
-    }
-    else{
-        _elems.resize(elems.size()+1);
+	for (size_t i = 0; i < elems.size(); i ++) {
+		_elems.push_back(elems[i]);
+	}
 
-        for(int i = elems.size()-1; i >= 0; i --){
-            _elems[i + 1] = elems[i];
-            heapifyDown(i + 1);
-        }
-    }
+
+	for (size_t j = parent(_elems.size() - 1); j > 0; j--)
+		heapifyDown(j);
+
+	heapifyDown(root());
+
+
 }
 
 template <class T, class Compare>
 T heap<T, Compare>::pop()
 {
     /// @todo Remove, and return, the element with highest priority
-    T returnVal = peek();
-    _elems[root()] = _elems[_elems.size()-1];
-    _elems.resize(_elems.size()-1);
+
+    T returnVal = _elems[root()];
+    _elems[root()] = _elems[_elems.size() - 1];
+    _elems.pop_back();
     heapifyDown(root());
     return returnVal;
 
