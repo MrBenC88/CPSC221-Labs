@@ -4,6 +4,8 @@ A compilation of course labs completed for Data Structures & Algorithms course.
 
 C++
 Catch library for testing
+Debug: GDB
+Memory leak detection: Valgrind
 
 
 Consists of
